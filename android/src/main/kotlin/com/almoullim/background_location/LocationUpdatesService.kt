@@ -229,7 +229,9 @@ class LocationUpdatesService : Service() {
             if (isGoogleApiAvailable && !this.forceLocationManager) {
                 mFusedLocationClient!!.removeLocationUpdates(mFusedLocationCallback!!)
             } else {
-                mLocationManager!!.removeUpdates(mLocationManagerCallback!!)
+                if (mLocationManager != null) {
+                    mLocationManager!!.removeUpdates(mLocationManagerCallback!!)
+                }
             }
 
             Utils.setRequestingLocationUpdates(this, false)
