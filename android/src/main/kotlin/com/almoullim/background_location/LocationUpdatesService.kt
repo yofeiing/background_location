@@ -98,31 +98,22 @@ class LocationUpdatesService : Service() {
     private var mServiceHandler: Handler? = null
 
     override fun onCreate() {
-        val googleAPIAvailability = GoogleApiAvailability.getInstance()
-            .isGooglePlayServicesAvailable(applicationContext)
+//         val googleAPIAvailability = GoogleApiAvailability.getInstance()
+//             .isGooglePlayServicesAvailable(applicationContext)
         
-        isGoogleApiAvailable = googleAPIAvailability == ConnectionResult.SUCCESS
+//         isGoogleApiAvailable = googleAPIAvailability == ConnectionResult.SUCCESS
         
 
-        if (isGoogleApiAvailable && !this.forceLocationManager) {
-            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-            
-            mFusedLocationCallback = object : LocationCallback() {
-                override fun onLocationResult(locationResult: LocationResult?) {
-                    super.onLocationResult(locationResult)
-                    onNewLocation(locationResult!!.lastLocation)
-                }
-            }
-        } else {
-            mLocationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
+        mLocationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
 
-            mLocationManagerCallback = LocationListener { location ->
-                println(location.toString())
-                onNewLocation(location)
-            }
+        mLocationManagerCallback = LocationListener { location ->
+            println(location.toString())
+            onNewLocation(location)
         }
+        
 
-        getLastLocation()
+//        getLastLocation()
+
 
         val handlerThread = HandlerThread(TAG)
         handlerThread.start()
